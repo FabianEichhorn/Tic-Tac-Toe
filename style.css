@@ -12,6 +12,13 @@ td {
     width: 130px;
     height: 130px;
     border: 5px solid black;
+    position: relative;
+    /* .shape hat position absolute und weil wir die bilder an den Tabllen anrichten wollen, braucht das Element woran es ausgerichtet werden soll position relative */
+    cursor: pointer;
+}
+
+td:hover {
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 tr:first-child td {
@@ -28,4 +35,23 @@ table tr:last-child td {
 
 table tr td:last-child {
     border-right: 0;
+}
+
+
+/* Images */
+
+.td-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shape {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+}
+
+.d-none {
+    display: none;
 }
