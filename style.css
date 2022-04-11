@@ -1,0 +1,31 @@
+/* Table Design from css-tricks.com */
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    width: 400px;
+}
+
+td {
+    width: 130px;
+    height: 130px;
+    border: 5px solid black;
+}
+
+tr:first-child td {
+    border-top: 0;
+}
+
+table tr td:first-child {
+    border-left: 0;
+}
+
+table tr:last-child td {
+    border-bottom: 0;
+}
+
+table tr td:last-child {
+    border-right: 0;
+}
