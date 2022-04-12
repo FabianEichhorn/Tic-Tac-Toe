@@ -3,16 +3,23 @@ let fields = [];
 let currentShape = 'cross';
 
 function fillShape(id) { // id ist der Funktionsparameter und greift auf die Id der jeweiligen Stelle zu zb. fillShape(3) = an stelle 3
-    if (currentShape == 'cross') {
-        currentShape = 'circle';
-    } else {
-        currentShape = 'cross';
-    }
+    if (!fields[id]) { // if !fields(id) zb = fields(0) und da ist noch nichts drin bekommen wir den wert undifined => if (fields[id]) = false und die ganze if abfrage wird nicht ausgeführt.
+        //! macht es möchtlich, dass das erste mal klicken erlaubt ist (macht false zu true) sonst würde das gar nicht mehr anklickbar sein (muss negiert werden)
+        if (currentShape == 'cross') {
+            currentShape = 'circle';
+            document.getElementById('player-2').classList.remove('player-inactive');
+            document.getElementById('player-1').classList.add('player-inactive');
+        } else {
+            currentShape = 'cross';
+            document.getElementById('player-1').classList.remove('player-inactive')
+            document.getElementById('player-2').classList.add('player-inactive')
+        }
 
-    fields[id] = currentShape;
-    console.log(fields);
-    draw();
-    checkForWin();
+        fields[id] = currentShape;
+        console.log(fields);
+        draw();
+        checkForWin();
+    }
 }
 
 

@@ -1,3 +1,37 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-panel {
+    display: flex;
+    flex-direction: column;
+    font-size: 32px;
+    position: absolute;
+    left: 7vw;
+}
+
+.player-panel img {
+    width: 60px;
+    height: 60px;
+    margin-left: 0.5rem;
+}
+
+.one-player {
+    display: flex;
+    align-items: center;
+    margin-right: 4rem;
+    margin-bottom: 1rem;
+}
+
+.player-inactive {
+    opacity: 0.5;
+}
+
+
 /* Table Design from css-tricks.com */
 
 table {
@@ -54,4 +88,16 @@ table tr td:last-child {
 
 .d-none {
     display: none;
+}
+
+.horizontal-line {
+    position: absolute;
+    height: 5px;
+    width: 350px;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 265px;
+}
+
+.make-vertikal {
+    transform: rotate(90deg);
 }
