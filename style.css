@@ -34,6 +34,13 @@ body {
 
 /* Table Design from css-tricks.com */
 
+.table-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -95,9 +102,10 @@ table tr td:last-child {
     height: 5px;
     width: 350px;
     background-color: rgba(0, 0, 0, 0.5);
-    top: 265px;
+    transform: scaleX(0.0);
+    transition: transform 225ms ease-in-out;
 }
 
 .make-vertikal {
-    transform: rotate(90deg);
+    transform: rotate(90deg) scaleX(0.0);
 }
