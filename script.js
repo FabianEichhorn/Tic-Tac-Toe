@@ -1,9 +1,9 @@
 let fields = [];
-
+let gameOver = false;
 let currentShape = 'cross';
 
 function fillShape(id) { // id ist der Funktionsparameter und greift auf die Id der jeweiligen Stelle zu zb. fillShape(3) = an stelle 3
-    if (!fields[id]) { // if !fields(id) zb = fields(0) und da ist noch nichts drin bekommen wir den wert undifined => if (fields[id]) = false und die ganze if abfrage wird nicht ausgeführt.
+    if (!fields[id] && !gameOver) { // if !fields(id) zb = fields(0) und da ist noch nichts drin bekommen wir den wert undifined => if (fields[id]) = false und die ganze if abfrage wird nicht ausgeführt.
         //! macht es möchtlich, dass das erste mal klicken erlaubt ist (macht false zu true) sonst würde das gar nicht mehr anklickbar sein (muss negiert werden)
         if (currentShape == 'cross') {
             currentShape = 'circle';
@@ -77,6 +77,34 @@ function checkForWin() {
     }
     if (winner) {
         console.log('Gewonnen', winner)
+        gameOver = true;
+        setTimeout(function() {
+            document.getElementById('game-over').classList.remove('d-none');
+            document.getElementById('restart-btn').classList.remove('d-none');
+        }, 1000)
+
     }
 
 }
+
+
+function restartGame() {
+    gameOver = false;
+    fields = [] //fields muss wieder geleert werden 
+    document.getElementById('game-over').classList.add('d-none');
+    for (let i = 0; i < 8; i++) {
+        document.getElementById('line-' + i).classList.add('d-none'); // setzt alle linien wieder auf d-none
+    }
+    for (let i = 0; i < 9; i++) {
+        document.getElementById('circle-' + i).classList.add('d-none');
+        document.getElementById('cross-' + i).classList.add('d-none');
+    }
+}
+
+
+
+/* zur GameOver Funktion: 
+man legt eine Variable gameOver = False an damit normalerweise natürlich man nicht gameOver ist. da wir mit der if abfrage fields[id]
+schon checken ob etwas drin ist, kann man hier GameOver gleich noch mit rein nehmen. 
+d.h die if abfrage checkt jetzt ob ich das ganze ausführen möchte und ob man nicht gameOver ist. gameOver ist false und mit ! wird es 
+zu true also wenn man nicht gameOver ist geht es weiter */
