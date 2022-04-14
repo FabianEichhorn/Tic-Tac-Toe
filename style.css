@@ -11,7 +11,7 @@ body {
     flex-direction: column;
     font-size: 32px;
     position: absolute;
-    left: 7vw;
+    left: 12vw;
 }
 
 .player-panel img {
