@@ -7,12 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css">
     <script src="script.js"></script>
 </head>
 
 <body>
 
     <img class="game-over d-none" id="game-over" src="./img/gameOver.png" alt="">
+    <span class="game-over-span d-none" id="game-over-circle"> Der Gewinner ist Player 1</span>
+    <span class="game-over-span d-none" id="game-over-cross"> Der Gewinner ist Player 2</span>
     <button onclick="restartGame()" id="restart-btn" class="restart-btn d-none">Restart</button>
 
 

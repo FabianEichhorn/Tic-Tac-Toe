@@ -1,0 +1,12 @@
+@media (max-width: 950px) {
+    .restart-btn {
+        top: 87%;
+    }
+    .player-panel {
+        left: 25%;
+        top: 5%;
+    }
+    .game-over-span {
+        top: 675px;
+    }
+}

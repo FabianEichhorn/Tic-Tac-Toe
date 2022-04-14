@@ -2,24 +2,34 @@ let fields = [];
 let gameOver = false;
 let currentShape = 'cross';
 
+
 function fillShape(id) { // id ist der Funktionsparameter und greift auf die Id der jeweiligen Stelle zu zb. fillShape(3) = an stelle 3
     if (!fields[id] && !gameOver) { // if !fields(id) zb = fields(0) und da ist noch nichts drin bekommen wir den wert undifined => if (fields[id]) = false und die ganze if abfrage wird nicht ausgeführt.
         //! macht es möchtlich, dass das erste mal klicken erlaubt ist (macht false zu true) sonst würde das gar nicht mehr anklickbar sein (muss negiert werden)
         if (currentShape == 'cross') {
-            currentShape = 'circle';
-            document.getElementById('player-2').classList.remove('player-inactive');
-            document.getElementById('player-1').classList.add('player-inactive');
+            placeCircle();
         } else {
-            currentShape = 'cross';
-            document.getElementById('player-1').classList.remove('player-inactive')
-            document.getElementById('player-2').classList.add('player-inactive')
+            placeCross();
         }
 
         fields[id] = currentShape;
-        console.log(fields);
         draw();
         checkForWin();
     }
+}
+
+
+function placeCircle() {
+    currentShape = 'circle';
+    document.getElementById('player-2').classList.remove('player-inactive');
+    document.getElementById('player-1').classList.add('player-inactive');
+}
+
+
+function placeCross() {
+    currentShape = 'cross';
+    document.getElementById('player-1').classList.remove('player-inactive')
+    document.getElementById('player-2').classList.add('player-inactive')
 }
 
 
@@ -38,6 +48,114 @@ function draw() {
 
 
 function checkForWin() {
+    let winner;
+    checkForWinHorizontal(winner);
+    checkForWinVertical(winner);
+    checkForWinDiagonal(winner);
+}
+
+
+
+function checkForWinHorizontal(winner) {
+    if (fields[0] == fields[1] && fields[1] == fields[2] && fields[0]) { //&& fields[0]: Evaluieren (Auswerten): 'circle' == 'circle' / true 'circle' == 'cross' / false
+        winner = fields[0];
+        document.getElementById('line-0').style.transform = 'scaleX(1)';
+    }
+    if (fields[3] == fields[4] && fields[4] == fields[5] && fields[3]) {
+        winner = fields[3];
+        document.getElementById('line-1').style.transform = 'scaleX(1)';
+    }
+    if (fields[6] == fields[7] && fields[7] == fields[8] && fields[6]) {
+        winner = fields[6];
+        document.getElementById('line-2').style.transform = 'scaleX(1)';
+    }
+    winnerIs(winner);
+}
+
+
+function checkForWinVertical(winner) {
+    if (fields[0] == fields[3] && fields[3] == fields[6] && fields[0]) {
+        winner = fields[0];
+        document.getElementById('line-4').style.transform = 'rotate(90deg) scaleX(1)';
+
+    }
+    if (fields[1] == fields[4] && fields[4] == fields[7] && fields[1]) {
+        winner = fields[1];
+        document.getElementById('line-3').style.transform = 'rotate(90deg) scaleX(1)';
+    }
+    if (fields[2] == fields[5] && fields[5] == fields[8] && fields[2]) {
+        winner = fields[2];
+        document.getElementById('line-5').style.transform = 'rotate(90deg) scaleX(1)';
+    };
+    winnerIs(winner);
+}
+
+
+
+function checkForWinDiagonal(winner) {
+    if (fields[0] == fields[4] && fields[4] == fields[8] && fields[0]) {
+        winner = fields[0];
+        document.getElementById('line-6').style.transform = 'rotate(45deg) scaleX(1)';
+    }
+    if (fields[2] == fields[4] && fields[4] == fields[6] && fields[2]) {
+        winner = fields[2];
+        document.getElementById('line-7').style.transform = 'rotate(-45deg) scaleX(1)';
+    };
+    winnerIs(winner);
+}
+
+
+function winnerIs(winner) {
+    if (winner) {
+        console.log('Gewonnen', winner)
+        gameOver = true;
+        setTimeout(function() {
+            document.getElementById('game-over').classList.remove('d-none');
+            document.getElementById('restart-btn').classList.remove('d-none');
+            nameWinner();
+        }, 1000)
+    }
+}
+
+
+function nameWinner() {
+    if (currentShape == 'cross') {
+        document.getElementById('game-over-cross').classList.remove('d-none')
+    }
+    if (currentShape == 'circle') {
+        document.getElementById('game-over-circle').classList.remove('d-none')
+    }
+}
+
+
+function restartGame() {
+    gameOver = false;
+    fields = [] //fields muss wieder geleert werden 
+    document.getElementById('game-over').classList.add('d-none');
+    for (let i = 0; i < 8; i++) {
+        document.getElementById('line-' + i).style.transform = 'scaleX(0)'; // setzt die linien wieder auf scaleX0 wodurch sie nach restart wieder auf 1 gesetzt werden. bei d-none blieben sie verdeckt da die klasse erst wieder removed hätte werden müssen.
+        // document.getElementById('line-' + i).classList.add('d-none'); // setzt alle linien wieder auf d-none
+    }
+    for (let i = 0; i < 9; i++) {
+        document.getElementById('circle-' + i).classList.add('d-none');
+        document.getElementById('cross-' + i).classList.add('d-none');
+    }
+    document.getElementById('restart-btn').classList.add('d-none');
+    document.getElementById('game-over-circle').classList.add('d-none');
+    document.getElementById('game-over-cross').classList.add('d-none');
+
+}
+
+
+
+/* zur GameOver Funktion: 
+man legt eine Variable gameOver = False an damit normalerweise natürlich man nicht gameOver ist. da wir mit der if abfrage fields[id]
+schon checken ob etwas drin ist, kann man hier GameOver gleich noch mit rein nehmen. 
+d.h die if abfrage checkt jetzt ob ich das ganze ausführen möchte und ob man nicht gameOver ist. gameOver ist false und mit ! wird es 
+zu true also wenn man nicht gameOver ist geht es weiter */
+
+
+/* function checkForWin() {
     let winner;
     // First Row
     if (fields[0] == fields[1] && fields[1] == fields[2] && fields[0]) { //&& fields[0]: Evaluieren (Auswerten): 'circle' == 'circle' / true 'circle' == 'cross' / false
@@ -85,26 +203,4 @@ function checkForWin() {
 
     }
 
-}
-
-
-function restartGame() {
-    gameOver = false;
-    fields = [] //fields muss wieder geleert werden 
-    document.getElementById('game-over').classList.add('d-none');
-    for (let i = 0; i < 8; i++) {
-        document.getElementById('line-' + i).classList.add('d-none'); // setzt alle linien wieder auf d-none
-    }
-    for (let i = 0; i < 9; i++) {
-        document.getElementById('circle-' + i).classList.add('d-none');
-        document.getElementById('cross-' + i).classList.add('d-none');
-    }
-}
-
-
-
-/* zur GameOver Funktion: 
-man legt eine Variable gameOver = False an damit normalerweise natürlich man nicht gameOver ist. da wir mit der if abfrage fields[id]
-schon checken ob etwas drin ist, kann man hier GameOver gleich noch mit rein nehmen. 
-d.h die if abfrage checkt jetzt ob ich das ganze ausführen möchte und ob man nicht gameOver ist. gameOver ist false und mit ! wird es 
-zu true also wenn man nicht gameOver ist geht es weiter */
+} */
